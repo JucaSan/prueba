@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="form-utilitaria">
-        <form method="POST" action="{{ route('guardia.reparto.store') }}" class="form-unidades">
+        <form method="POST" action="{{ route('guardia.reparto.store') }}" class="form-unidades" enctype="multipart/form-data">
             @csrf
 
             <!-- Título del formulario -->
@@ -19,30 +19,28 @@
                     <!-- Fecha de salida (automática) -->
                     <div class="form-group">
                         <label for="fecha_salida" class="form-group__label">{{ __('Fecha de salida') }}</label>
-                        <input id="fecha_salida" class="form-group__input" type="date" name="fecha_salida" />
+                        <input id="fecha_salida" class="form-group__input" type="date" name="fecha_salida" required readonly />
                     </div>
 
                     <!-- Hora de salida (automática y en tiempo real) -->
                     <div class="form-group">
                         <label for="hora_salida" class="form-group__label">{{ __('Hora de salida') }}</label>
-                        <input id="hora_salida" class="form-group__input" type="time" name="hora_salida" />
+                        <input id="hora_salida" class="form-group__input" type="text" name="hora_salida" required readonly />
                     </div>
 
-                    <!-- Unidad -->
+
+                    <!--Unidad-->
                     <div class="form-group">
-                        <label for="unidad_id" class="form-group__label">{{ __('Unidad') }}</label>
-                        <select id="unidad_id" class="form-group__input" name="unidad_id" required>
-                            <option value="">Seleccione una unidad</option>
-                            @foreach ($unidadesReparto as $unidad)
-                                <option value="{{ $unidad->id_unidad }}">{{ $unidad->nombre_unidad }} - {{ $unidad->placa }}</option>
-                            @endforeach
-                        </select>
+                        <label for="unidad_id">{{ __('Unidad') }}</label>
+                        <input id="unidad_id"   class="form-group__input"  type="text" name="unidad_id" required readonly value="{{ old('unidad_id') }}" />
+                        <!-- Campo oculto para el ID -->
+                        <input id="unidad_id_hidden" type="hidden" name="unidad_id_hidden" />
                     </div>
 
                     <!-- Ruta -->
                     <div class="form-group">
                         <label for="ruta" class="form-group__label">{{ __('Ruta') }}</label>
-                        <input id="ruta" class="form-group__input" type="text" name="ruta" required placeholder="Ruta asignada" />
+                        <input id="ruta" class="form-group__input" type="text" name="ruta" required placeholder="Ruta asignada"  />
                     </div>
                 </div>
 
@@ -51,7 +49,7 @@
                     <!-- Número de pedido -->
                     <div class="form-group">
                         <label for="numero_pedido" class="form-group__label">{{ __('Número de pedido') }}</label>
-                        <input id="numero_pedido" class="form-group__input" type="text" name="numero_pedido" required readonly placeholder="Número de pedido" />
+                        <input id="numero_pedido" class="form-group__input" type="text" name="numero_pedido" required placeholder="Número de pedido" readonly/>
                     </div>
 
                     <!-- Se dirige -->
@@ -74,16 +72,21 @@
                 </div>
             </div>
 
+            <!-- Fotografía de la unidad (múltiples imágenes, máximo 5) -->
+            <div class="form-group">
+                <label for="fotografia_unidad" class="form-group__label">{{ __('Fotografía de la unidad') }}</label>
+                <input id="fotografia_unidad" class="form-group__input" type="file" name="fotografia_unidad[]" accept="image/*" multiple  />
+                <small class="form-group__text">{{ __('Puedes subir hasta 5 imágenes.') }}</small>
+            </div>
+
             <!-- Descripción de producto saliente -->
             <div class="form-group">
                 <label for="descripcion_producto" class="form-group__label">{{ __('Descripción de producto saliente') }}</label>
                 <textarea id="descripcion_producto" class="form-group__input form-group__input--textarea" name="descripcion_producto" rows="3" placeholder="Descripción del producto"></textarea>
             </div>
-
-            <!-- Comentarios -->
             <div class="form-group">
                 <label for="comentarios" class="form-group__label">{{ __('Comentarios') }}</label>
-                <textarea id="comentarios" class="form-group__input form-group__input--textarea" name="comentarios" rows="3" placeholder="Escribe cualquier observación adicional"></textarea>
+                <textarea id="comentarios" class="form-group__input form-group__input--textarea" name="comentarios" rows="3" placeholder="Escribe cualquier observacion adicional ejemplo: Viene otro conductor" ></textarea>
             </div>
 
             <!-- Botones al final del formulario -->
@@ -98,7 +101,11 @@
         </form>
     </div>
 
-       <!-- Modal para agregar número de pedido -->
+    <!-- Incluye SweetAlert2 y html5-qrcode -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- Modal para agregar número de pedido -->
 <div class="modal">
     <div class="modal__overlay">
         <div class="modal__content">
@@ -125,11 +132,7 @@
     </div>
 </div>
 
-    <!-- Incluye SweetAlert2 y html5-qrcode -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/html5-qrcode"></script>
+<script src="{{ asset('js/pedidos.js')}}"></script>
+<script src="{{asset('js/qr.js')}}"></script>
 
-    <!-- Scripts adicionales -->
-    <script src="{{ asset('js/pedidos.js') }}"></script>
-    <script src="{{ asset('js/qr.js') }}"></script>
 </x-app-layout>

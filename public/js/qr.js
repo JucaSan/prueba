@@ -13,8 +13,8 @@ function formatearFecha(fecha) {
 // Función para actualizar la hora y fecha en los campos del formulario
 function actualizarFechaYHora() {
     const fechaActual = new Date();
-    document.getElementById('hora_entrada').value = formatearHora(fechaActual);
-    document.getElementById('fecha_entrada').value = formatearFecha(fechaActual);
+    document.getElementById('hora_salida').value = formatearHora(fechaActual);
+    document.getElementById('fecha_salida').value = formatearFecha(fechaActual);
 }
 // Escáner de QR
 let html5QrCode;
@@ -29,12 +29,19 @@ document.getElementById('btn-scan').addEventListener('click', function() {
             // Inicializar el escáner dentro del toast
             html5QrCode = new Html5Qrcode("qr-reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                // Asignar el texto escaneado al campo "unidad"
-                document.getElementById('unidad').value = decodedText;
-
+                // Dividir el texto escaneado por la primera coma
+                const [idUnidad, ...resto] = decodedText.split(',');
+            
+                // Mostrar solo la parte después de la primera coma en el input
+                const textoMostrar = resto.join(',').trim(); // "PLaca: LFK445, Unidad:Unidad 4"
+                document.getElementById('unidad_id').value = textoMostrar;
+            
+                // Guardar el ID en un campo oculto para usarlo en la inserción
+                document.getElementById('unidad_id_hidden').value = idUnidad;
+            
                 // Actualizar la fecha y hora en el momento del escaneo
                 actualizarFechaYHora();
-
+            
                 // Detener el escáner antes de cerrar el modal
                 html5QrCode.stop().then(() => {
                     console.log("Escáner detenido correctamente.");
@@ -69,3 +76,5 @@ document.getElementById('btn-scan').addEventListener('click', function() {
         }
     });
 });
+
+

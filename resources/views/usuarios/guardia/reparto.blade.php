@@ -51,7 +51,7 @@
                     <!-- Número de pedido -->
                     <div class="form-group">
                         <label for="numero_pedido" class="form-group__label">{{ __('Número de pedido') }}</label>
-                        <input id="numero_pedido" class="form-group__input" type="text" name="numero_pedido" required placeholder="Número de pedido" />
+                        <input id="numero_pedido" class="form-group__input" type="text" name="numero_pedido" required readonly placeholder="Número de pedido" />
                     </div>
 
                     <!-- Se dirige -->
@@ -97,6 +97,33 @@
             </div>
         </form>
     </div>
+
+       <!-- Modal para agregar número de pedido -->
+<div class="modal">
+    <div class="modal__overlay">
+        <div class="modal__content">
+            <h3 class="modal__title">Agregar Número de Pedido</h3>
+
+            <!-- Lista de pedidos agregados -->
+            <ul class="modal__list">
+                <!-- Los pedidos se agregarán aquí dinámicamente -->
+            </ul>
+
+            <!-- Formulario para agregar un nuevo pedido -->
+            <form class="modal__form" onsubmit="event.preventDefault(); agregarPedido();">
+                <div class="modal__form-group">
+                    <label for="nuevo_pedido" class="modal__label">Número de Pedido</label>
+                    <input type="text" id="nuevo_pedido" class="modal__input" placeholder="Ingrese el número de pedido" pattern="\d+" title="Solo se permiten números" required />
+                </div>
+                <div class="modal__buttons">
+                    <button type="button" onclick="cerrarModal()" class="modal__button modal__button--cancel">Cancelar</button>
+                    <button type="button" onclick="finalizar()" class="modal__button modal__button--submit">Finalizar</button>
+                    <button type="submit" class="modal__button modal__button--submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
     <!-- Incluye SweetAlert2 y html5-qrcode -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

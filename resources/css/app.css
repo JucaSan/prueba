@@ -467,3 +467,101 @@ body, html {
         width: 33.333%; /* Ancho para escritorio (1/3 del ancho) */
     }
 }
+
+
+
+/* ================================================== */
+/* Bloque: inicio__bg (Contenedor principal del fondo) */
+/* ================================================== */
+.inicio__bg {
+    background-image: url('../../public/img/login1.jpeg'); /* Imagen de fondo */
+    background-size: cover; /* Cubre todo el espacio disponible */
+    background-position: center; /* Centra la imagen */
+    height: 100vh; /* Altura completa de la ventana */
+    position: relative; /* Posicionamiento relativo */
+    display: flex; /* Flexbox para centrar contenido */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+}
+
+/* Elemento: Pseudo-elemento para oscurecer el fondo */
+.inicio__bg::before {
+    content: ''; /* Contenido vacío */
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque */
+    z-index: 1; /* Capa superior */
+}
+
+/* ============================================= */
+/* Bloque: container (Contenedor del contenido) */
+/* ============================================= */
+.container {
+    position: relative; /* Posicionamiento relativo */
+    z-index: 1; /* Capa superior */
+    text-align: center; /* Centra el texto */
+}
+
+/* ============================================= */
+/* Bloque: logo (Estilos para el logo) */
+/* ============================================= */
+.logo {
+    width: 70%; /* Ancho del logo */
+    height: auto; /* Altura automática */
+    margin: 0 auto; /* Centra horizontalmente */
+    margin-bottom: 30px; /* Espacio inferior */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)); /* Sombra blanca */
+}
+
+/* ============================================= */
+/* Bloque: login-button (Contenedor del botón) */
+/* ============================================= */
+.login-button {
+    display: inline-block; /* Display en línea */
+    margin-top: 20px; /* Espacio superior */
+}
+
+/* Elemento: Enlace dentro del botón */
+.login-button a {
+    display: inline-block; /* Display en línea */
+    padding: 12px 30px; /* Relleno interno */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: 600; /* Grosor de fuente */
+    color: #fff; /* Color del texto */
+    background: linear-gradient(45deg, #000000, #13127c); /* Fondo degradado */
+    border-radius: 10px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    transition: all 0.5s ease; /* Transición suave */
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3); /* Sombra */
+}
+
+/* Modificador: Efecto hover en el botón */
+.login-button a:hover {
+    transform: translateY(-3px); /* Efecto de levitación */
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4); /* Sombra más pronunciada */
+}
+
+/* Modificador: Efecto focus en el botón */
+.login-button a:focus {
+    background: linear-gradient(45deg, #000000, #2c2aa7); /* Cambio de degradado */
+}
+
+/* Modificador: Efecto active (clic) en el botón */
+.login-button a:active {
+    transform: translateY(0); /* Vuelve a la posición original */
+}
+
+/* ============================================= */
+/* Bloque: welcome-text (Texto de bienvenida) */
+/* ============================================= */
+.welcome-text {
+    color: #fff; /* Color del texto */
+    font-size: 18px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espacio inferior */
+    font-weight: 500; /* Grosor de fuente */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para el texto */
+}

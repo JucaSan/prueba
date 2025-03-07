@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Guardia\RepartoController; // Importa el controlador
+use App\Http\Controllers\Guardia\DashboardController; // Importa el controlador
 // ─────────────────────────────────────────────────────────────────────
 // RUTA DE BIENVENIDA
 // ─────────────────────────────────────────────────────────────────────
@@ -53,9 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // ─── Ruta para Guardias ───────────────────────────────────
     Route::middleware('rolemanager:guardia')->group(function () {
-        Route::get('/guardia', function () {
-            return view('/usuarios/guardia/index');
-        })->name('guardia');
+        Route::get('/guardia', [DashboardController::class, 'index'])->name('guardia');
 
         // Rutas específicas para el guardia
         // Rutas específicas para el guardia

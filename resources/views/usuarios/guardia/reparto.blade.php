@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="form-utilitaria">
-        <form method="POST" action="{{ route('guardia.reparto.store') }}" class="form-unidades" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('guardia.reparto.store') }}" class="form-unidades">
             @csrf
 
             <!-- Título del formulario -->
@@ -19,13 +19,13 @@
                     <!-- Fecha de salida (automática) -->
                     <div class="form-group">
                         <label for="fecha_salida" class="form-group__label">{{ __('Fecha de salida') }}</label>
-                        <input id="fecha_salida" class="form-group__input" type="date" name="fecha_salida" required readonly />
+                        <input id="fecha_salida" class="form-group__input" type="date" name="fecha_salida" />
                     </div>
 
                     <!-- Hora de salida (automática y en tiempo real) -->
                     <div class="form-group">
                         <label for="hora_salida" class="form-group__label">{{ __('Hora de salida') }}</label>
-                        <input id="hora_salida" class="form-group__input" type="text" name="hora_salida" required readonly />
+                        <input id="hora_salida" class="form-group__input" type="time" name="hora_salida" />
                     </div>
 
                     <!-- Unidad -->
@@ -74,21 +74,16 @@
                 </div>
             </div>
 
-            <!-- Fotografía de la unidad (múltiples imágenes, máximo 5) -->
-            <div class="form-group">
-                <label for="fotografia_unidad" class="form-group__label">{{ __('Fotografía de la unidad') }}</label>
-                <input id="fotografia_unidad" class="form-group__input" type="file" name="fotografia_unidad[]" accept="image/*" multiple required />
-                <small class="form-group__text">{{ __('Puedes subir hasta 5 imágenes.') }}</small>
-            </div>
-
             <!-- Descripción de producto saliente -->
             <div class="form-group">
                 <label for="descripcion_producto" class="form-group__label">{{ __('Descripción de producto saliente') }}</label>
                 <textarea id="descripcion_producto" class="form-group__input form-group__input--textarea" name="descripcion_producto" rows="3" placeholder="Descripción del producto"></textarea>
             </div>
+
+            <!-- Comentarios -->
             <div class="form-group">
                 <label for="comentarios" class="form-group__label">{{ __('Comentarios') }}</label>
-                <textarea id="comentarios" class="form-group__input form-group__input--textarea" name="comentarios" rows="3" placeholder="Escribe cualquier observacion adicional ejemplo: Viene otro conductor" ></textarea>
+                <textarea id="comentarios" class="form-group__input form-group__input--textarea" name="comentarios" rows="3" placeholder="Escribe cualquier observación adicional"></textarea>
             </div>
 
             <!-- Botones al final del formulario -->
@@ -107,34 +102,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
 
-    <!-- Modal para agregar número de pedido -->
-<div class="modal">
-    <div class="modal__overlay">
-        <div class="modal__content">
-            <h3 class="modal__title">Agregar Número de Pedido</h3>
-
-            <!-- Lista de pedidos agregados -->
-            <ul class="modal__list">
-                <!-- Los pedidos se agregarán aquí dinámicamente -->
-            </ul>
-
-            <!-- Formulario para agregar un nuevo pedido -->
-            <form class="modal__form" onsubmit="event.preventDefault(); agregarPedido();">
-                <div class="modal__form-group">
-                    <label for="nuevo_pedido" class="modal__label">Número de Pedido</label>
-                    <input type="text" id="nuevo_pedido" class="modal__input" placeholder="Ingrese el número de pedido" pattern="\d+" title="Solo se permiten números" required />
-                </div>
-                <div class="modal__buttons">
-                    <button type="button" onclick="cerrarModal()" class="modal__button modal__button--cancel">Cancelar</button>
-                    <button type="button" onclick="finalizar()" class="modal__button modal__button--submit">Finalizar</button>
-                    <button type="submit" class="modal__button modal__button--submit">Agregar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script src="{{ asset('js/pedidos.js')}}"></script>
-<script src="{{asset('js/qr.js')}}"></script>
-
+    <!-- Scripts adicionales -->
+    <script src="{{ asset('js/pedidos.js') }}"></script>
+    <script src="{{ asset('js/qr.js') }}"></script>
 </x-app-layout>

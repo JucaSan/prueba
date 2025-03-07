@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Unidad;
 use App\Models\SalidaUnidad;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 
 class RepartoController extends Controller
 {
@@ -36,19 +34,7 @@ class RepartoController extends Controller
             'guardia_turno' => 'required|string|max:100',
             'descripcion_producto' => 'required|string',
             'comentarios' => 'nullable|string',
-            'fotografia_unidad' => 'required|array|max:5',
-            'fotografia_unidad.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Procesar las imágenes
-        $imagenes = [];
-        foreach ($request->file('fotografia_unidad') as $image) {
-            $img = Image::make($image);
-            $img->encode('jpg', 75); // Comprimir la imagen al 75% de calidad
-            $imageName = 'unidades/' . uniqid() . '.jpg';
-            Storage::disk('public')->put($imageName, $img);
-            $imagenes[] = $imageName;
-        }
 
         // Guardar los datos en la base de datos
         SalidaUnidad::create([
@@ -62,7 +48,6 @@ class RepartoController extends Controller
             'guardia_turno' => $request->guardia_turno,
             'descripcion_producto' => $request->descripcion_producto,
             'comentarios' => $request->comentarios,
-            'fotografia_unidad' => $imagenes,
         ]);
 
         return redirect()->route('guardia.reparto')->with('success', 'Registro de salida guardado correctamente.');

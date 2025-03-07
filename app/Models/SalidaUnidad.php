@@ -25,11 +25,7 @@ class SalidaUnidad extends Model
         'guardia_turno',
         'descripcion_producto',
         'comentarios',
-        'fotografia_unidad',
-    ];
-
-    protected $casts = [
-        'fotografia_unidad' => 'json', // Para manejar el campo JSON
+        // 'fotografia_unidad', // Eliminado
     ];
 
     // Relación con la tabla unidades

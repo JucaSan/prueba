@@ -16,6 +16,17 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Selección de Sucursal -->
+    <div>
+        <label for="sucursal_id">{{ __('Sucursal') }}</label>
+        <select id="sucursal_id" name="sucursal_id" required>
+            <option value="">Seleccione una sucursal</option>
+            @foreach ($sucursales as $sucursal)
+                <option value="{{ $sucursal->id_sucursal }}">{{ $sucursal->nombre_sucursal }}</option>
+            @endforeach
+        </select>
+    </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

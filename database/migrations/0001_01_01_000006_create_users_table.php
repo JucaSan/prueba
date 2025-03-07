@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // Llave foránea para la sucursal
+            $table->foreignId('sucursal_id')
+                  ->constrained('sucursales', 'id_sucursal') // Referencia a la tabla `sucursales` y columna `id_sucursal`
+                  ->onDelete('cascade'); // Eliminar en cascada si se borra la sucursal
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

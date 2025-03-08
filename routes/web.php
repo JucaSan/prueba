@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Guardia\RepartoController; // Importa el controlador
 use App\Http\Controllers\Guardia\DashboardController; // Importa el controlador
+use App\Models\Unidad;
 // ─────────────────────────────────────────────────────────────────────
 // RUTA DE BIENVENIDA
 // ─────────────────────────────────────────────────────────────────────

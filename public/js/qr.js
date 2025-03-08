@@ -31,17 +31,17 @@ document.getElementById('btn-scan').addEventListener('click', function() {
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
                 // Dividir el texto escaneado por la primera coma
                 const [idUnidad, ...resto] = decodedText.split(',');
-            
+
                 // Mostrar solo la parte después de la primera coma en el input
                 const textoMostrar = resto.join(',').trim(); // "PLaca: LFK445, Unidad:Unidad 4"
                 document.getElementById('unidad_id').value = textoMostrar;
-            
+
                 // Guardar el ID en un campo oculto para usarlo en la inserción
                 document.getElementById('unidad_id_hidden').value = idUnidad;
-            
+
                 // Actualizar la fecha y hora en el momento del escaneo
                 actualizarFechaYHora();
-            
+
                 // Detener el escáner antes de cerrar el modal
                 html5QrCode.stop().then(() => {
                     console.log("Escáner detenido correctamente.");

@@ -131,7 +131,21 @@
         </div>
     </div>
 </div>
-
+<script>
+    // Verificar si hay un mensaje en la sesión
+    @if (session('success') || session('error'))
+        Swal.fire({
+            icon: '{{ session('success') ? 'success' : 'error' }}',
+            title: '{{ session('success') ? '¡Éxito!' : '¡Error!' }}',
+            text: '{{ session('success') ?? session('error') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+    @endif
+</script>
 <script src="{{ asset('js/pedidos.js')}}"></script>
 <script src="{{asset('js/qr.js')}}"></script>
 

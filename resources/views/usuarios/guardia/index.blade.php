@@ -12,7 +12,7 @@
                     <!-- Mostrar las unidades pendientes en cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                         @foreach ($unidadesPendientes as $salida)
-                            <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="bg-white p-6 rounded-lg shadow-md" id="unidad-{{ $salida->unidad_id }}">
                                 <h3 class="text-xl font-semibold mb-2">
                                     {{ $salida->unidad->nombre_unidad }} ({{ $salida->unidad->placa }})
                                 </h3>
@@ -25,15 +25,9 @@
                                 <p class="text-gray-600">
                                     <strong>Conductor:</strong> {{ $salida->conductor }}
                                 </p>
-                                {{-- <p class="text-gray-600">
-                                    <strong>Ruta:</strong> {{ $salida->ruta }}
-                                </p> --}}
                                 <p class="text-gray-600">
                                     <strong>Número de pedido:</strong> {{ $salida->numero_pedido }}
                                 </p>
-                                {{-- <p class="text-gray-600">
-                                    <strong>Se dirige a:</strong> {{ $salida->se_dirige }}
-                                </p> --}}
                                 <p class="text-gray-600">
                                     <strong>Guardia en turno:</strong> {{ $salida->guardia_turno }}
                                 </p>
@@ -44,7 +38,7 @@
                                     <strong>Comentarios:</strong> {{ $salida->comentarios }}
                                 </p>
 
-                                <button type="button" onclick="abrirModal()" class="modal__button modal__button--submit">Terminar ruta</button>
+                                <button type="button" onclick="abrirModal({{ $salida->unidad_id }})" class="modal__button modal__button--submit">Terminar ruta</button>
                             </div>
                         @endforeach
                     </div>
@@ -89,5 +83,50 @@
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="{{asset('js/qr.js')}}"></script>
 
+<script>
+    function abrirModal(unidadId) {
+        // Llenar el campo oculto con el ID de la unidad
+        document.getElementById('unidad_id_hidden_inicio').value = unidadId;
+        // Mostrar el modal
+        document.getElementById('miModal').style.display = 'block';
+    }
+
+    function cerrarModal() {
+        // Ocultar el modal
+        document.getElementById('miModal').style.display = 'none';
+    }
+
+    function finalizar() {
+        const unidadId = document.getElementById('unidad_id_hidden_inicio').value;
+        const fechaEntrada = document.getElementById('fecha_entrada_inicio').value;
+        const horaEntrada = document.getElementById('hora_entrada_inicio').value;
+        const comentarios = document.getElementById('comentarios').value;
+
+        fetch('/guardia/finalizar-ruta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                unidad_id: unidadId,
+                fecha_entrada: fechaEntrada,
+                hora_entrada: horaEntrada,
+                comentarios: comentarios
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Ocultar la tarjeta de la unidad
+                document.getElementById(`unidad-${unidadId}`).style.display = 'none';
+                cerrarModal();
+            } else {
+                alert(data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
 
 </x-app-layout>
